@@ -13,4 +13,4 @@ console.log(purchaseTax(300));
 console.log(saleTax(300));
 console.log(saleTax(500));
 
-
+console.log(300);
