@@ -1,19 +1,52 @@
-const button = document.querySelector('button');
-const output = document.querySelector('p');
+const button = document.querySelector("button");
+const output = document.querySelector("p");
 
-function trackUserHandler() {
-  navigator.geolocation.getCurrentPosition(
-    posData => {
-      console.log(posData);
-    },
-    error => {
-      console.log(error);
-    }
-  );
-  console.log('Getting position...');
+const getPosition = (opts) => {
+  const promise = new Promise((resolve, reject) => {
+    navigator.geolocation.getCurrentPosition(
+      (success) => {
+        resolve(success);
+      },
+      (error) => {
+        reject(error);
+      },
+      opts
+    );
+  });
+  return promise;
+};
+
+const setTimer = async (duration) => {
+  const promise = new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve("Done");
+    }, duration);
+  });
+  return promise;
+};
+
+async function trackUserHandler() {
+  try {
+    const posData = await getPosition();
+    const timerData = await setTimer(2000);
+    console.log(timerData, posData);
+  } catch (error) {
+    console.log(error);
+  }
+  // .then((posData) => {
+  //   positionData = posData;
+  //   return setTimer(2000);
+  // })
+  // .then((data) => {
+  //   console.log(data, positionData);
+  // })
+  // .catch((err) => {
+  //   console.log(err);
+  // });
+  // console.log("Getting position...");
 }
 
-button.addEventListener('click', trackUserHandler);
+button.addEventListener("click", trackUserHandler);
 
 // let result = 0;
 
